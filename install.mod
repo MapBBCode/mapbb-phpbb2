@@ -176,7 +176,6 @@ includes/bbcode.php
 #-----[ FIND ]------------------------------------------
 #
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
-
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
@@ -333,11 +332,11 @@ map_help = "{L_BBCODE_MAP_HELP}";
 #-----[ FIND ]------------------------------------------
 # not needed if editor is always opened in a window
 #
-          <td class="row2" valign="top"><span class="gen"> <span class="genmed"> </span>
+	  <td class="row2" valign="top"><span class="gen"> <span class="genmed"> </span>
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
-          <div id="mapedit"></div>
+	  <div id="mapedit"></div>
 #
 #-----[ FIND ]------------------------------------------
 #
