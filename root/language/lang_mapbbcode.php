@@ -38,6 +38,7 @@ $lang['MapBB_outerTitle'] = 'Show this place on an external map';
 
 // Leaflet.draw
 $lang['MapBB_polylineTitle'] = 'Draw a path';
+$lang['MapBB_polygonTitle'] = 'Draw an area';
 $lang['MapBB_markerTitle'] = 'Add a marker';
 $lang['MapBB_drawCancelTitle'] = 'Cancel drawing';
 $lang['MapBB_markerTooltip'] = 'Click map to place marker';

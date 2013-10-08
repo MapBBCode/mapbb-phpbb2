@@ -38,6 +38,7 @@ $lang['MapBB_outerTitle'] = 'Открыть внешний сайт с картой этого места';
 
 // Leaflet.draw
 $lang['MapBB_polylineTitle'] = 'Нарисовать ломаную';
+$lang['MapBB_polygonTitle'] = 'Нарисовать область';
 $lang['MapBB_markerTitle'] = 'Добавить маркер';
 $lang['MapBB_drawCancelTitle'] = 'Отменить рисование';
 $lang['MapBB_markerTooltip'] = 'Нажмите на карту для установки маркера';
