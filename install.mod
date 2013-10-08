@@ -93,6 +93,14 @@ posting.php
 #
 #-----[ FIND ]------------------------------------------
 #
+include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+$mapbbcode_present = TRUE;
+#
+#-----[ FIND ]------------------------------------------
+#
 	'L_EMPTY_MESSAGE' => $lang['Empty_message'],
 #
 #-----[ BEFORE, ADD ]------------------------------------------
@@ -434,10 +442,6 @@ templates/subSilver/simple_header.tpl
 <script src="includes/mapbbcode/mapbbcode-config.js"></script>
 <script language="Javascript" type="text/javascript">
 <!--
-function isTrue(val) {
-	return val && val !== '0' && val !== 'false';
-}
-
 var mapBBcode = new MapBBCode({
 	libPath: 'includes/mapbbcode/',
 	layers: '{LAYERS}'.split(','),
@@ -449,8 +453,8 @@ var mapBBcode = new MapBBCode({
 	editorHeight: {EDITOR_HEIGHT}+0,
 	windowWidth: {WINDOW_WIDTH}+0,
 	windowHeight: {WINDOW_HEIGHT}+0,
-	fullFromStart: isTrue('{ALWAYS_FULL}'),
-	preferStandardLayerSwitcher: isTrue('{STANDARD_SWITCHER}')
+	fullFromStart: {ALWAYS_FULL},
+	preferStandardLayerSwitcher: {STANDARD_SWITCHER}
 });
 //-->
 </script>
