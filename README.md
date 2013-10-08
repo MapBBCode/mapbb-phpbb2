@@ -18,10 +18,9 @@ Those steps are based on [the official instructions](http://easymod.sourceforge.
 1. Unzip `mapbbcode_mod.zip` to `$PHPBB/admin/mods`.
 2. Open your forum, login as administrator and enter the Administration Panel
 3. Click "Install MODs" in the left tab (under "MOD Center" header) and enter your admin password for the third time.
-4. Look for "MapBBCode" mod, enable "Preview" and click "Process" next to it.
-5. If you've got "subRebel" template, check that its templates are processed. If not, you'll have to follow "subRebel.mod" file instructions manually.
-6. Check that everything looks good, and click "Next Step".
-7. Press "Complete Installation". Now you can check the "MapBBCode" administration panel.
+4. Look for "MapBBCode" mod and click "Process" next to it.
+5. Check that everything looks good, and click "Next Step", then "Complete Installation" a couple of times.
+6. Now you can check out the "MapBBCode" administration panel and add maps to forum posts.
 
 ### No EasyMOD
 

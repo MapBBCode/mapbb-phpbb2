@@ -20,8 +20,8 @@
 ##                templates/subSilver/simple_header.tpl
 ## Included Files: 5 + 16 js,css,png
 ##                db_install.php
-##                languages/lang_mapbbcode.php
-##                languages/lang_mapbbcode_russian.php
+##                language/lang_mapbbcode.php
+##                language/lang_mapbbcode_russian.php
 ##                admin/admin_mapbbcode.php
 ##                templates/subSilver/admin/mapbbcode_body.tpl
 ##                includes/mapbbcode/*
@@ -29,7 +29,7 @@
 ## License: http://www.wtfpl.net/ WTFPL
 ##############################################################
 ## Author Notes:
-##    This MOD is written for phpBB 2.0.21 and not tested with other versions.
+##    This MOD was tested on phpBB 2.0.21 and 2.0.23.
 ##    And yes, it is EasyMOD friendly.
 ##############################################################
 ## MOD History:
@@ -44,8 +44,9 @@
 #
 #-----[ COPY ]------------------------------------------------
 #
+copy root/language/lang_mapbbcode.php to language/lang_english/lang_mapbbcode.php
+copy root/language/lang_mapbbcode_russian.php to language/lang_russian/lang_mapbbcode.php
 copy root/admin/admin_mapbbcode.php to admin/admin_mapbbcode.php
-copy root/languages/lang_mapbbcode.php to languages/lang_english/lang_mapbbcode.php
 copy root/templates/admin/mapbbcode_body.tpl to templates/subSilver/admin/mapbbcode_body.tpl
 copy root/mapbbcode/leaflet.js to includes/mapbbcode/leaflet.js
 copy root/mapbbcode/leaflet.css to includes/mapbbcode/leaflet.css
@@ -72,20 +73,20 @@ copy root/mapbbcode/images/spritesheet-2x.png to includes/mapbbcode/images/sprit
 # !!!!(Don't forget to delete db_install.php from the server after you have finished installing this mod!)!!!!
 #
 # or insert those records manually:
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_default_zoom','2')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_default_pos','22,11')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_view_width','600')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_view_height','300')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_full_height','600')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_always_full','')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_height','400')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_width','600')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_height','400')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_window','1')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_outer_link','')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_allowed_tags','[auib]|span|br|em|strong|tt')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_standard_switcher','')
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_layers','OpenStreetMap')
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_default_zoom','2');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_default_pos','22,11');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_view_width','600');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_view_height','300');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_full_height','600');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_always_full','');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_height','400');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_width','600');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_height','400');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_window','1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_outer_link','');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_allowed_tags','[auib]|span|br|em|strong|tt');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_standard_switcher','');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_layers','OpenStreetMap');
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -93,9 +94,9 @@ posting.php
 #
 #-----[ FIND ]------------------------------------------
 #
-include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+generate_smilies('inline', PAGE_POSTING);
 #
-#-----[ BEFORE, ADD ]------------------------------------------
+#-----[ AFTER, ADD ]------------------------------------------
 #
 $mapbbcode_present = TRUE;
 #
@@ -175,6 +176,7 @@ includes/bbcode.php
 #-----[ FIND ]------------------------------------------
 #
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
+
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
@@ -309,7 +311,7 @@ templates/subSilver/bbcode.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
-<!-- BEGIN email --><a href="mailto:{EMAIL}">{EMAIL}</A><!-- END email -->
+<!-- BEGIN img --><img src="{URL}" border="0" /><!-- END img -->
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
