@@ -23,12 +23,12 @@ else
 		'full_height' => 600,
 		'always_full' => '',
 		'editor_height' => 400,
-		'window_width' => 600,
-		'window_height' => 400,
+		'window_width' => 800,
+		'window_height' => 500,
 		'editor_window' => 1,
 		'outer_link' => '',
 		'allowed_tags' => '[auib]|span|br|em|strong|tt',
-                'standard_switcher' => '',
+                'standard_switcher' => '1',
 		'layers' => 'OpenStreetMap'
 	);
 

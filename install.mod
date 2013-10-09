@@ -80,12 +80,12 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_view_height'
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_full_height','600');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_always_full','');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_height','400');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_width','600');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_height','400');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_width','800');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_window_height','500');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_window','1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_outer_link','');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_allowed_tags','[auib]|span|br|em|strong|tt');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_standard_switcher','');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_standard_switcher','1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_layers','OpenStreetMap');
 #
 #-----[ OPEN ]------------------------------------------
