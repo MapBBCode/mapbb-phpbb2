@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td class="row1">{L_LAYERS}</td>
-		<td class="row2"><select id="layer_select" size="1" onchange="javascript:selectedLayer(this.value);"></select> <input type="button" value="{L_ADD_LAYER}" onclick="javascript:addLayer();" id="addbutton"/></td>
+		<td class="row2"><select id="layer_select" size="1"></select> <input type="button" id="addbutton"/></td>
 	</tr>
 	<tr style="display: none;" id="bing_key_row">
 		<td class="row1" id="bing_key_title"></td>
@@ -128,7 +128,11 @@ config.setStrings({
 	growTitle: '{L_GROWTITLE}',
 	shrinkTitle: '{L_SHRINKTITLE}',
 	zoomInTitle: '{L_ZOOMINTITLE}',
-	zoomOutTitle: '{L_ZOOMOUTTITLE}'
+	zoomOutTitle: '{L_ZOOMOUTTITLE}',
+        selectLayer: '{L_SELECT_LAYER}',
+        addLayer: '{L_ADD_LAYER}',
+        keyNeeded: '{L_BING_KEY}',
+        keyNeededAlert: '{L_KEY_NEEDED}'
 });
 config.on('show change', function(options) {
 	var f = document.forms['mapfm'];
@@ -143,60 +147,16 @@ config.on('show change', function(options) {
 	f.elements['layers'].value = options.layers.join(',');
 	f.elements['always_full'].value = options.fullFromStart ? '1' : '';
 	f.elements['editor_window'].value = options.editorInWindow ? '1' : '';
-	populateSelect();
 	updateTableValues();
 });
+config.bindLayerAdder({
+    select: 'layer_select',
+    button: 'addbutton',
+    keyBlock: 'bing_key_row',
+    keyBlockDisplay: 'table-row',
+    keyTitle: 'bing_key_title',
+    keyValue: 'bing_key'
+});
 config.show('panel_config');
-
-function selectedLayer(layer) {
-	var link = window.layerList.getKeyLink(layer),
-	    el = document.getElementById('bing_key_row');
-	if( link ) {
-		document.getElementById('bing_key_title').innerHTML = '{L_BING_KEY}'.replace('%s', link);
-		el.style.display = 'table-row';
-	} else {
-		el.style.display = 'none';
-	}
-	document.getElementById('addbutton').disabled = layer ? false : true;
-}
-
-function populateSelect() {
-	var i, layerKeys = layerList.getSortedKeys(),
-	    select = document.getElementById('layer_select'),
-	    layers = config.options.layers, layers0 = [];
-	for( i = 0; i < layers.length; i++ )
-		layers0.push(layers[i].indexOf(':') < 0 ? layers[i] : layers[i].substring(0, layers[i].indexOf(':')));
-	while( select.firstChild )
-		select.removeChild(select.firstChild);
-	var opt = document.createElement('option');
-	opt.value = '';
-	opt.innerHTML = '{L_SELECT_LAYER}...';
-	select.appendChild(opt);
-	for( i = 0; i < layerKeys.length; i++ ) {
-		if( layers0.indexOf(layerKeys[i]) >= 0 )
-			continue;
-		var opt = document.createElement('option');
-		opt.innerHTML = layerKeys[i];
-		opt.value = layerKeys[i];
-		select.appendChild(opt);
-	}
-	selectedLayer(select.value);
-}
-
-function addLayer() {
-	var f = document.forms['mapfm'],
-	    layer = document.getElementById('layer_select').value;
-	if( !layer )
-		return;
-	var needKey = window.layerList.requiresKey(layer),
-	    key = f.elements['bing_key'].value.trim();
-	if( needKey && !key.length ) {
-		alert('{L_KEY_NEEDED}');
-	} else {
-		if( needKey )
-			layer += ':' + key;
-		config.addLayer(layer);
-	}
-}
 // -->
 </script>
