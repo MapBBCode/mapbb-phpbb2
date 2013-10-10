@@ -32,7 +32,7 @@
 	</tr>
 	<tr style="display: none;" id="bing_key_row">
 		<td class="row1" id="bing_key_title"></td>
-		<td class="row2"><input class="post" type="text" maxlength="80" size="40" name="bing_key" value="" /></td>
+		<td class="row2"><input class="post" type="text" maxlength="80" size="40" id="bing_key"/></td>
 	</tr>
 	<tr><td class="row2" colspan="2">
 		<div id="panel_config"></div>
