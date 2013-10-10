@@ -355,6 +355,16 @@ templates/subSilver/overall_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
+{META}
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+<!-- BEGIN switch_enable_mapbbcode -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- END switch_enable_mapbbcode -->
+#
+#-----[ FIND ]------------------------------------------
+#
 <!-- END switch_enable_pm_popup -->
 #
 #-----[ AFTER, ADD ]------------------------------------------
@@ -422,6 +432,16 @@ mapBBcode.setStrings({
 #-----[ OPEN ]------------------------------------------
 #
 templates/subSilver/simple_header.tpl
+#
+#-----[ FIND ]------------------------------------------
+#
+{META}
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+<!-- BEGIN switch_enable_mapbbcode -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- END switch_enable_mapbbcode -->
 #
 #-----[ FIND ]------------------------------------------
 #
