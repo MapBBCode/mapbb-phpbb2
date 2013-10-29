@@ -90,8 +90,8 @@ $enable_external_no = ( !$new['mapbb_enable_external'] ) ? "checked=\"checked\""
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
-        "S_ENABLE_EXTERNAL_YES" => $enable_external_yes,
-        "S_ENABLE_EXTERNAL_NO" => $enable_external_no,
+	"S_ENABLE_EXTERNAL_YES" => $enable_external_yes,
+	"S_ENABLE_EXTERNAL_NO" => $enable_external_no,
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -221,6 +221,14 @@ templates/subSilver/bbcode.tpl
 #-----[ OPEN ]------------------------------------------
 #
 templates/subSilver/overall_header.tpl
+#
+#-----[ FIND ]------------------------------------------
+#
+	libPath: 'includes/mapbbcode/',
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	windowPath: 'includes/mapbbcode/mapbbcode-window.html',
 #
 #-----[ FIND ]------------------------------------------
 #

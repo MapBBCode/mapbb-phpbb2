@@ -205,7 +205,7 @@ includes/bbcode.php
 
 	global $board_config;
 	if (isset($board_config) && $board_config['mapbb_enable_external'])
-	
+	{
 		$patterns[] = '#\[mapid(:[a-fA-F0-9]+)?\]([a-z]+)\[/mapid\]#i';
 		$replacements[] = $bbcode_tpl['mapid'];
 	}
@@ -411,7 +411,7 @@ templates/subSilver/overall_header.tpl
 <script language="Javascript" type="text/javascript">
 <!--
 var mapBBcode = new MapBBCode({
-	libPath: 'includes/mapbbcode/',
+	windowPath: 'includes/mapbbcode/mapbbcode-window.html',
 	layers: '{LAYERS}'.split(','),
 	defaultZoom: {DEFAULT_ZOOM}+0,
 	defaultPosition: [{DEFAULT_POS}],
@@ -503,7 +503,6 @@ templates/subSilver/simple_header.tpl
 <script language="Javascript" type="text/javascript">
 <!--
 var mapBBcode = new MapBBCode({
-	libPath: 'includes/mapbbcode/',
 	layers: '{LAYERS}'.split(','),
 	defaultZoom: {DEFAULT_ZOOM}+0,
 	defaultPosition: [{DEFAULT_POS}],
