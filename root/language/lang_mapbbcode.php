@@ -25,7 +25,6 @@ $lang['MapBB_remove'] = 'Delete'; // delete feature from popup
 $lang['MapBB_apply'] = 'Apply'; // button on an editing map to apply changes
 $lang['MapBB_cancel'] = 'Cancel'; // button on an editing map to discard changes
 $lang['MapBB_title'] = 'Title'; // prompt for marker title text
-$lang['MapBB_bing'] = 'Bing'; // name of Bing imagery layer
 
 // button titles
 $lang['MapBB_zoomInTitle'] = 'Zoom in';
@@ -35,6 +34,19 @@ $lang['MapBB_cancelTitle'] = 'Cancel changes';
 $lang['MapBB_fullScreenTitle'] = 'Enlarge or shrink map panel';
 $lang['MapBB_helpTitle'] = 'Open help window';
 $lang['MapBB_outerTitle'] = 'Show this place on an external map';
+
+//share
+$lang['MapBB_export'] = 'Export';
+$lang['MapBB_exportTitle'] = 'Download this map';
+$lang['MapBB_upload'] = 'Upload';
+$lang['MapBB_uploadTitle'] = 'Upload this map to an external server';
+$lang['MapBB_uploading'] = 'Uploading';
+$lang['MapBB_uploadError'] = 'Error while uploading the map';
+$lang['MapBB_uploadSuccess'] = 'Upload was successful. Bookmark this link to be able to edit the map';
+$lang['MapBB_sharedFormHeader'] = 'There are no objects to upload. Enter a MapBBCode Share map URL';
+$lang['MapBB_sharedFormError'] = 'This map panel has incorrect endpoint set.<br>Please contact an administrator.';
+$lang['MapBB_sharedFormInvalidCode'] = 'Map code is invalid';
+$lang['MapBB_sharedCodeError'] = 'Failed to download an external map<br><br><a href="{url}" target="mapbbcode_outer">Open map in a new window</a>';
 
 // Leaflet.draw
 $lang['MapBB_polylineTitle'] = 'Draw a path';
@@ -98,7 +110,8 @@ $lang['MapBB_Window_size'] = 'Editor window size';
 $lang['MapBB_Key_needed'] = 'This layer needs a developer key';
 $lang['MapBB_Bing_key'] = 'This layer needs a developer key (<a href="%s" target="bing">how to get it</a>)';
 $lang['MapBB_Standard_switcher'] = 'Hide layer list behind a button control';
-$lang['MapBB_Outer_link'] = 'External link template, if needed (parameters: {zoom}, {lat}, {lon})';
+$lang['MapBB_Enable_external'] = 'Enable including and uploading maps to MapBBCode Share';
+$lang['MapBB_Outer_link'] = 'External link template, if a button is needed (parameters: {zoom}, {lat}, {lon})';
 $lang['MapBB_Outer_link_example'] = 'Example: http://www.openstreetmap.org/#map={zoom}/{lat}/{lon}';
 $lang['MapBB_Allowed_tags'] = 'Allowed HTML tags in popups (regular expression)';
 $lang['Click_return_mapbbcode_config'] = 'Click %sHere%s to return to MapBBCode Configuration';

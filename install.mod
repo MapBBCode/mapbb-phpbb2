@@ -3,28 +3,28 @@
 ## MOD Title: MapBBCode
 ## MOD Author: Zverik <zverik@textual.ru> (Ilya Zverev)
 ## MOD Description: Adds [map] bbcode and its editor to phpBB 2
-## MOD Version: 1.0
+## MOD Version: 1.1
 ##
 ## Installation Level: Easy
 ## Installation Time: 15 Minutes
 ## Files To Edit: 10
-##                posting.php
-##                privmsg.php
-##                viewtopic.php
-##                includes/bbcode.php
-##                includes/page_header.php
-##                includes/topic_review.php
-##                templates/subSilver/bbcode.tpl
-##                templates/subSilver/posting_body.tpl
-##                templates/subSilver/overall_header.tpl
-##                templates/subSilver/simple_header.tpl
+##		posting.php
+##		privmsg.php
+##		viewtopic.php
+##		includes/bbcode.php
+##		includes/page_header.php
+##		includes/topic_review.php
+##		templates/subSilver/bbcode.tpl
+##		templates/subSilver/posting_body.tpl
+##		templates/subSilver/overall_header.tpl
+##		templates/subSilver/simple_header.tpl
 ## Included Files: 5 + 16 js,css,png
-##                db_install.php
-##                language/lang_mapbbcode.php
-##                language/lang_mapbbcode_russian.php
-##                admin/admin_mapbbcode.php
-##                templates/subSilver/admin/mapbbcode_body.tpl
-##                includes/mapbbcode/*
+##		db_install.php
+##		language/lang_mapbbcode.php
+##		language/lang_mapbbcode_russian.php
+##		admin/admin_mapbbcode.php
+##		templates/subSilver/admin/mapbbcode_body.tpl
+##		includes/mapbbcode/*
 ##
 ## License: http://www.wtfpl.net/ WTFPL
 ##############################################################
@@ -33,6 +33,9 @@
 ##    And yes, it is EasyMOD friendly.
 ##############################################################
 ## MOD History:
+##
+##   2013-10-29 - Version 1.1
+##      - Support for MapBBCode Share
 ##
 ##   2013-10-08 - Version 1.0
 ##      - initial release
@@ -86,6 +89,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_editor_windo
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_outer_link','');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_allowed_tags','[auib]|span|br|em|strong|tt');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_standard_switcher','1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_enable_external','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_layers','OpenStreetMap');
 #
 #-----[ OPEN ]------------------------------------------
@@ -125,7 +129,7 @@ if ($forum_topic_data['topic_replies'] + 1 < $start + count($postrow))
 $mapbbcode_present = FALSE;
 for($i = 0; $i < $total_posts; $i++)
 {
-	if (preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]/', $postrow[$i]['post_text'])) {
+	if (preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]|\[mapid\][a-z]+\[\/mapid\]/', $postrow[$i]['post_text'])) {
 		$mapbbcode_present = TRUE;
 		break;
 	}
@@ -151,7 +155,7 @@ if ( $mode == 'newpm' )
 #
 #-----[ BEFORE, ADD ]------------------------------------------
 #
-	$mapbbcode_present = preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]/', $privmsg['privmsgs_text']);
+	$mapbbcode_present = preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]|\[mapid\][a-z]+\[\/mapid\]/', $privmsg['privmsgs_text']);
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -182,6 +186,8 @@ includes/bbcode.php
 
 	$bbcode_tpl['map'] = str_replace('{DIVID}', '\\2', $bbcode_tpl['map']);
 	$bbcode_tpl['map'] = str_replace('{MAPBBCODE}', '\\1\\3', $bbcode_tpl['map']);
+	$bbcode_tpl['mapid'] = str_replace('{DIVID}', '\\1', $bbcode_tpl['mapid']);
+	$bbcode_tpl['mapid'] = str_replace('{MAPID}', '\\2', $bbcode_tpl['mapid']);
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -191,10 +197,19 @@ includes/bbcode.php
 #
 
 	// [map]...[/map] code. First prepare individual codes
-	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$mapre = '#(\[map(?:=[0-9,.-]+|id)?)(:[a-fA-F0-9]+)?(\].*?\[/map(?:id)?\])#si';
 	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
+	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
 	$patterns[] = $mapre;
 	$replacements[] = $bbcode_tpl['map'];
+
+	global $board_config;
+	if (isset($board_config) && $board_config['mapbb_enable_external'])
+	
+		$patterns[] = '#\[mapid(:[a-fA-F0-9]+)?\]([a-z]+)\[/mapid\]#i';
+		$replacements[] = $bbcode_tpl['mapid'];
+	}
+	
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -223,7 +238,7 @@ includes/topic_review.php
 	{
 		while ( $row = $db->sql_fetchrow($result) )
 		{
-			if (preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]/', $row['post_text'])) {
+			if (preg_match('/\[map(?:=[0-9.,-]+)?\].*?\[\/map\]|\[mapid\][a-z]+\[\/mapid\]/', $row['post_text'])) {
 				$mapbbcode_present = TRUE;
 				break;
 			}
@@ -264,7 +279,6 @@ if( $mapbbcode_present )
 		'L_MAPBB_APPLY' => $lang['MapBB_apply'],
 		'L_MAPBB_CANCEL' => $lang['MapBB_cancel'],
 		'L_MAPBB_TITLE' => $lang['MapBB_title'],
-		'L_MAPBB_BING' => $lang['MapBB_bing'],
 		'L_MAPBB_ZOOMINTITLE' => $lang['MapBB_zoomInTitle'],
 		'L_MAPBB_ZOOMOUTTITLE' => $lang['MapBB_zoomOutTitle'],
 		'L_MAPBB_APPLYTITLE' => $lang['MapBB_applyTitle'],
@@ -272,6 +286,17 @@ if( $mapbbcode_present )
 		'L_MAPBB_FULLSCREENTITLE' => $lang['MapBB_fullScreenTitle'],
 		'L_MAPBB_HELPTITLE' => $lang['MapBB_helpTitle'],
 		'L_MAPBB_OUTERTITLE' => $lang['MapBB_outerTitle'],
+		'L_MAPBB_EXPORT' => $lang['MapBB_export'],
+		'L_MAPBB_EXPORTTITLE' => $lang['MapBB_exportTitle'],
+		'L_MAPBB_UPLOAD' => $lang['MapBB_upload'],
+		'L_MAPBB_UPLOADTITLE' => $lang['MapBB_uploadTitle'],
+		'L_MAPBB_UPLOADING' => $lang['MapBB_uploading'],
+		'L_MAPBB_UPLOADERROR' => $lang['MapBB_uploadError'],
+		'L_MAPBB_UPLOADSUCCESS' => $lang['MapBB_uploadSuccess'],
+		'L_MAPBB_SHAREDFORMHEADER' => $lang['MapBB_sharedFormHeader'],
+		'L_MAPBB_SHAREDFORMERROR' => $lang['MapBB_sharedFormError'],
+		'L_MAPBB_SHAREDFORMINVALIDCODE' => $lang['MapBB_sharedFormInvalidCode'],
+		'L_MAPBB_SHAREDCODEERROR' => $lang['MapBB_sharedCodeError'],
 		'L_MAPBB_POLYLINETITLE' => $lang['MapBB_polylineTitle'],
 		'L_MAPBB_POLYGONTITLE' => $lang['MapBB_polygonTitle'],
 		'L_MAPBB_MARKERTITLE' => $lang['MapBB_markerTitle'],
@@ -297,6 +322,7 @@ if( $mapbbcode_present )
 		"OUTER_LINK" => $board_config['mapbb_outer_link'],
 		"ALWAYS_FULL" => $board_config['mapbb_always_full'] ? 'true' : 'false',
  		"STANDARD_SWITCHER" => $board_config['mapbb_standard_switcher'] ? 'true' : 'false',
+ 		"ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'] ? 'true' : 'false',
  		"EDITOR_WINDOW" => $board_config['mapbb_editor_window'] ? 'true' : 'false',
 		"ALLOWED_TAGS" => $board_config['mapbb_allowed_tags'])
 	);
@@ -316,6 +342,7 @@ templates/subSilver/bbcode.tpl
 #
 
 <!-- BEGIN map --><div id="map{DIVID}">{MAPBBCODE}</div><script language="javascript">mapBBcode.show('map{DIVID}');</script><!-- END map -->
+<!-- BEGIN mapid --><div id="map{DIVID}"></div><script language="javascript">mapBBcode.showExternal('map{DIVID}', '{MAPID}');</script><!-- END mapid -->
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -395,7 +422,9 @@ var mapBBcode = new MapBBCode({
 	windowWidth: {WINDOW_WIDTH}+0,
 	windowHeight: {WINDOW_HEIGHT}+0,
 	fullFromStart: {ALWAYS_FULL},
+	outerLinkTemplate: '{OUTER_LINK}',
 	preferStandardLayerSwitcher: {STANDARD_SWITCHER},
+	uploadButton: {ENABLE_EXTERNAL},
 	hideInsideClasses: []
 });
 mapBBcode.setStrings({
@@ -404,7 +433,6 @@ mapBBcode.setStrings({
 	apply: '{L_MAPBB_APPLY}',
 	cancel: '{L_MAPBB_CANCEL}',
 	title: '{L_MAPBB_TITLE}',
-	bing: '{L_MAPBB_BING}',
 	zoomInTitle: '{L_MAPBB_ZOOMINTITLE}',
 	zoomOutTitle: '{L_MAPBB_ZOOMOUTTITLE}',
 	applyTitle: '{L_MAPBB_APPLYTITLE}',
@@ -412,6 +440,17 @@ mapBBcode.setStrings({
 	fullScreenTitle: '{L_MAPBB_FULLSCREENTITLE}',
 	helpTitle: '{L_MAPBB_HELPTITLE}',
 	outerTitle: '{L_MAPBB_OUTERTITLE}',
+	exportName: '{L_MAPBB_EXPORT}',
+	exportTitle: '{L_MAPBB_EXPORTTITLE}',
+	upload: '{L_MAPBB_UPLOAD}',
+	uploadTitle: '{L_MAPBB_UPLOADTITLE}',
+	uploading: '{L_MAPBB_UPLOADING}',
+	uploadError: '{L_MAPBB_UPLOADERROR}',
+	uploadSuccess: '{L_MAPBB_UPLOADSUCCESS}',
+	sharedFormHeader: '{L_MAPBB_SHAREDFORMHEADER}',
+	sharedFormError: '{L_MAPBB_SHAREDFORMERROR}',
+	sharedFormInvalidCode: '{L_MAPBB_SHAREDFORMINVALIDCODE}',
+	sharedCodeError: '{L_MAPBB_SHAREDCODEERROR}',
 	polylineTitle: '{L_MAPBB_POLYLINETITLE}',
 	polygonTitle: '{L_MAPBB_POLYGONTITLE}',
 	markerTitle: '{L_MAPBB_MARKERTITLE}',
@@ -475,6 +514,7 @@ var mapBBcode = new MapBBCode({
 	windowWidth: {WINDOW_WIDTH}+0,
 	windowHeight: {WINDOW_HEIGHT}+0,
 	fullFromStart: {ALWAYS_FULL},
+	outerLinkTemplate: '{OUTER_LINK}',
 	preferStandardLayerSwitcher: {STANDARD_SWITCHER}
 });
 //-->

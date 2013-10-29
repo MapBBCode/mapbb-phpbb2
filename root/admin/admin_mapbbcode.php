@@ -81,6 +81,8 @@ $template->set_filenames(array(
 
 $std_switcher_yes = ( $new['mapbb_standard_switcher'] ) ? "checked=\"checked\"" : "";
 $std_switcher_no = ( !$new['mapbb_standard_switcher'] ) ? "checked=\"checked\"" : "";
+$enable_external_yes = ( $new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
+$enable_external_no = ( !$new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
 
 //
 // Escape any quotes in the site description for proper display in the text
@@ -105,6 +107,7 @@ $template->assign_vars(array(
 	"L_KEY_NEEDED" => $lang['MapBB_Key_needed'],
 	"L_SELECT_LAYER" => $lang['MapBB_Select_layer'],
 	"L_STANDARD_SWITCHER" => $lang['MapBB_Standard_switcher'],
+	"L_ENABLE_EXTERNAL" => $lang['MapBB_Enable_external'],
 	"L_OUTER_LINK" => $lang['MapBB_Outer_link'],
 	"L_OUTER_LINK_EXAMPLE" => $lang['MapBB_Outer_link_example'],
 	"L_ALLOWED_TAGS" => $lang['MapBB_Allowed_tags'],
@@ -141,7 +144,10 @@ $template->assign_vars(array(
 	"ALWAYS_FULL" => $new['mapbb_always_full'],
 	"S_STANDARD_SWITCHER_YES" => $std_switcher_yes,
 	"S_STANDARD_SWITCHER_NO" => $std_switcher_no,
+        "S_ENABLE_EXTERNAL_YES" => $enable_external_yes,
+        "S_ENABLE_EXTERNAL_NO" => $enable_external_no,
 	"EDITOR_WINDOW" => $new['mapbb_editor_window'],
+	"ENABLE_EXTERNAL" => $new['mapbb_enable_external'],
 	"ALLOWED_TAGS" => $new['mapbb_allowed_tags'])
 );
 

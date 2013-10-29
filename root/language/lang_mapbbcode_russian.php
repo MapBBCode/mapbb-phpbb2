@@ -22,10 +22,9 @@ $lang['bbcode_map_help'] = 'Вставить карту: [map]широта,долгота(подпись); ...[/m
 
 $lang['MapBB_close'] = 'Закрыть'; // close feature editing popup
 $lang['MapBB_remove'] = 'Удалить'; // delete feature from popup
-$lang['MapBB_apply'] = 'Применить'; // button on an editing map to apply changes
+$lang['MapBB_apply'] = 'Вставить код'; // button on an editing map to apply changes
 $lang['MapBB_cancel'] = 'Отменить'; // button on an editing map to discard changes
 $lang['MapBB_title'] = 'Надпись'; // prompt for marker title text
-$lang['MapBB_bing'] = 'Спутник'; // name of Bing imagery layer
 
 // button titles
 $lang['MapBB_zoomInTitle'] = 'Приблизить';
@@ -35,6 +34,19 @@ $lang['MapBB_cancelTitle'] = 'Отменить изменения';
 $lang['MapBB_fullScreenTitle'] = 'Растянуть или сжать панель карты';
 $lang['MapBB_helpTitle'] = 'Открыть окно справки';
 $lang['MapBB_outerTitle'] = 'Открыть внешний сайт с картой этого места';
+
+// share
+$lang['MapBB_export'] = 'Скачать';
+$lang['MapBB_exportTitle'] = 'Сохранить эту карту на диск';
+$lang['MapBB_upload'] = 'На сервер';
+$lang['MapBB_uploadTitle'] = 'Загрузить эту карту в интернет-библиотеку';
+$lang['MapBB_uploading'] = 'Идёт загрузка';
+$lang['MapBB_uploadError'] = 'Загрузка не удалась из-за ошибки';
+$lang['MapBB_uploadSuccess'] = 'Карта загружена. Сохраните эту ссылку в закладки, чтобы потом править карту';
+$lang['MapBB_sharedFormHeader'] = 'Нет объектов для загрузки. Введите ссылку на карту в MapBBCode Share';
+$lang['MapBB_sharedFormError'] = 'В настройках панели карты прописан неправильный адрес.<br>Свяжитесь с администратором.';
+$lang['MapBB_sharedFormInvalidCode'] = 'Неправильный код карты';
+$lang['MapBB_sharedCodeError'] = 'Внешний сайт выдал ошибку вместо карты<br><br><a href="{url}" target="mapbbcode_outer">Открыть карту в новом окне</a>';
 
 // Leaflet.draw
 $lang['MapBB_polylineTitle'] = 'Нарисовать ломаную';
@@ -98,10 +110,10 @@ $lang['MapBB_Window_size'] = 'Размер окна редактора карты';
 $lang['MapBB_Key_needed'] = 'Этот слой требует ключ разработчика';
 $lang['MapBB_Bing_key'] = 'Этот слой требует ключ разработчика (<a href="%s" target="bing">инструкция по получению</a>)';
 $lang['MapBB_Standard_switcher'] = 'Убрать список слоёв за кнопку';
+$lang['MapBB_Enable_external'] = 'Разрешить вставку и загрузку карт на MapBBCode Share';
 $lang['MapBB_Outer_link'] = 'Шаблон внешней ссылки, если кнопка с ней нужна (параметры: {zoom}, {lat}, {lon})';
 $lang['MapBB_Outer_link_example'] = 'Пример: http://openstreetmap.ru/#layer=M&zoom={zoom}&lat={lat}&lon={lon}';
 $lang['MapBB_Allowed_tags'] = 'Допустимые теги в надписях (регулярное выражение)';
 $lang['Click_return_mapbbcode_config'] = '%sВернуться%s к настройке модуля MapBBCode';
-
 
 ?>

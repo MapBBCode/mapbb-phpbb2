@@ -62,6 +62,10 @@
 		<td class="row2"><input type="radio" name="standard_switcher" value="1" {S_STANDARD_SWITCHER_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="standard_switcher" value="0" {S_STANDARD_SWITCHER_NO} /> {L_NO}</td>
 	</tr>
 	<tr>
+		<td class="row1">{L_ENABLE_EXTERNAL}</td>
+		<td class="row2"><input type="radio" name="enable_external" value="1" {S_ENABLE_EXTERNAL_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="enable_external" value="0" {S_ENABLE_EXTERNAL_NO} /> {L_NO}</td>
+	</tr>
+	<tr>
 		<td class="row1">{L_OUTER_LINK}<br><span class="gensmall">{L_OUTER_LINK_EXAMPLE}</span></td>
 		<td class="row2"><input class="post" type="text" maxlength="120" size="40" name="outer_link" value="{OUTER_LINK}" /></td>
 	</tr>
@@ -92,10 +96,10 @@ function updateTableValues() {
 	    full = isTrue(f.elements['always_full'].value),
 	    win = isTrue(f.elements['editor_window'].value);
 	document.getElementById('default_zoom_pos').innerHTML = f.elements['default_zoom'].value + ',' + f.elements['default_pos'].value;
-	document.getElementById('panel_size').innerHTML = (full ? '<s>' : '') + f.elements['view_width'].value + 'x' + f.elements['view_height'].value + (full ? '</s>' : '');
+	document.getElementById('panel_size').innerHTML = (full ? '<span style="color: #777;">' : '') + f.elements['view_width'].value + 'x' + f.elements['view_height'].value + (full ? '</span>' : '');
 	document.getElementById('full_height').innerHTML = f.elements['full_height'].value;
-	document.getElementById('window_size').innerHTML = (win ? '' : '<s>') + f.elements['window_width'].value + 'x' + f.elements['window_height'].value + (win ? '' : '</s>');
-	document.getElementById('editor_height').innerHTML = (win ? '<s>' : '') + f.elements['editor_height'].value + (win ? '</s>' : '');
+	document.getElementById('window_size').innerHTML = (win ? '' : '<span style="color: #777;">') + f.elements['window_width'].value + 'x' + f.elements['window_height'].value + (win ? '' : '</span>');
+	document.getElementById('editor_height').innerHTML = (win ? '<span style="color: #777;">' : '') + f.elements['editor_height'].value + (win ? '</span>' : '');
 }
 
 var config = new MapBBCodeConfig({

@@ -5,6 +5,7 @@ mkdir $DIR
 cp install.mod $DIR
 cp README.md $DIR
 cp -r root $DIR
+cp -r upgrade $DIR
 rm $TARGET
 zip -qr $TARGET $DIR
 rm -r $DIR
