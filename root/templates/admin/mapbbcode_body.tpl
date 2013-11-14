@@ -3,8 +3,9 @@
     <link rel="stylesheet" href="../includes/mapbbcode/leaflet.ie.css" />
 <![endif]-->
 <script src="../includes/mapbbcode/leaflet.js"></script>
-<script src="../includes/mapbbcode/Bing.js"></script>
 <script src="../includes/mapbbcode/mapbbcode-config.js"></script>
+<script src="../includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.Config.js"></script>
+<script src="../includes/mapbbcode/proprietary/Bing.js"></script>
 
 <h1>{L_MAPBBCODE_CONFIG}</h1>
 

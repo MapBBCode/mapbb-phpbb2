@@ -3,7 +3,7 @@
 ## MOD Title: MapBBCode
 ## MOD Author: Zverik <zverik@textual.ru> (Ilya Zverev)
 ## MOD Description: Adds [map] bbcode and its editor to phpBB 2
-## MOD Version: 1.1
+## MOD Version: 1.2
 ##
 ## Installation Level: Easy
 ## Installation Time: 15 Minutes
@@ -34,6 +34,10 @@
 ##############################################################
 ## MOD History:
 ##
+##   2013-11-14 - Version 1.2
+##      - MapBBCode 1.1.0
+##      - reworked translations
+##
 ##   2013-10-29 - Version 1.1
 ##      - Support for MapBBCode Share
 ##
@@ -51,23 +55,7 @@ copy root/language/lang_mapbbcode.php to language/lang_english/lang_mapbbcode.ph
 copy root/language/lang_mapbbcode_russian.php to language/lang_russian/lang_mapbbcode.php
 copy root/admin/admin_mapbbcode.php to admin/admin_mapbbcode.php
 copy root/templates/admin/mapbbcode_body.tpl to templates/subSilver/admin/mapbbcode_body.tpl
-copy root/mapbbcode/leaflet.js to includes/mapbbcode/leaflet.js
-copy root/mapbbcode/leaflet.css to includes/mapbbcode/leaflet.css
-copy root/mapbbcode/leaflet.ie.css to includes/mapbbcode/leaflet.ie.css
-copy root/mapbbcode/leaflet.draw.js to includes/mapbbcode/leaflet.draw.js
-copy root/mapbbcode/leaflet.draw.css to includes/mapbbcode/leaflet.draw.css
-copy root/mapbbcode/leaflet.draw.ie.css to includes/mapbbcode/leaflet.draw.ie.css
-copy root/mapbbcode/Bing.js to includes/mapbbcode/Bing.js
-copy root/mapbbcode/mapbbcode.js to includes/mapbbcode/mapbbcode.js
-copy root/mapbbcode/mapbbcode-config.js to includes/mapbbcode/mapbbcode-config.js
-copy root/mapbbcode/mapbbcode-window.html to includes/mapbbcode/mapbbcode-window.html
-copy root/mapbbcode/images/layers.png to includes/mapbbcode/images/layers.png
-copy root/mapbbcode/images/layers-2x.png to includes/mapbbcode/images/layers-2x.png
-copy root/mapbbcode/images/marker-icon.png to includes/mapbbcode/images/marker-icon.png
-copy root/mapbbcode/images/marker-icon-2x.png to includes/mapbbcode/images/marker-icon-2x.png
-copy root/mapbbcode/images/marker-shadow.png to includes/mapbbcode/images/marker-shadow.png
-copy root/mapbbcode/images/spritesheet.png to includes/mapbbcode/images/spritesheet.png
-copy root/mapbbcode/images/spritesheet-2x.png to includes/mapbbcode/images/spritesheet-2x.png
+copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ SQL ]------------------------------------------
 #
@@ -274,42 +262,7 @@ if( $mapbbcode_present )
 	}
 
 	$template->assign_vars(array(
-		'L_MAPBB_CLOSE' => $lang['MapBB_close'],
-		'L_MAPBB_REMOVE' => $lang['MapBB_remove'],
-		'L_MAPBB_APPLY' => $lang['MapBB_apply'],
-		'L_MAPBB_CANCEL' => $lang['MapBB_cancel'],
-		'L_MAPBB_TITLE' => $lang['MapBB_title'],
-		'L_MAPBB_ZOOMINTITLE' => $lang['MapBB_zoomInTitle'],
-		'L_MAPBB_ZOOMOUTTITLE' => $lang['MapBB_zoomOutTitle'],
-		'L_MAPBB_APPLYTITLE' => $lang['MapBB_applyTitle'],
-		'L_MAPBB_CANCELTITLE' => $lang['MapBB_cancelTitle'],
-		'L_MAPBB_FULLSCREENTITLE' => $lang['MapBB_fullScreenTitle'],
-		'L_MAPBB_HELPTITLE' => $lang['MapBB_helpTitle'],
-		'L_MAPBB_OUTERTITLE' => $lang['MapBB_outerTitle'],
-		'L_MAPBB_EXPORT' => $lang['MapBB_export'],
-		'L_MAPBB_EXPORTTITLE' => $lang['MapBB_exportTitle'],
-		'L_MAPBB_UPLOAD' => $lang['MapBB_upload'],
-		'L_MAPBB_UPLOADTITLE' => $lang['MapBB_uploadTitle'],
-		'L_MAPBB_UPLOADING' => $lang['MapBB_uploading'],
-		'L_MAPBB_UPLOADERROR' => $lang['MapBB_uploadError'],
-		'L_MAPBB_UPLOADSUCCESS' => $lang['MapBB_uploadSuccess'],
-		'L_MAPBB_SHAREDFORMHEADER' => $lang['MapBB_sharedFormHeader'],
-		'L_MAPBB_SHAREDFORMERROR' => $lang['MapBB_sharedFormError'],
-		'L_MAPBB_SHAREDFORMINVALIDCODE' => $lang['MapBB_sharedFormInvalidCode'],
-		'L_MAPBB_SHAREDCODEERROR' => $lang['MapBB_sharedCodeError'],
-		'L_MAPBB_POLYLINETITLE' => $lang['MapBB_polylineTitle'],
-		'L_MAPBB_POLYGONTITLE' => $lang['MapBB_polygonTitle'],
-		'L_MAPBB_MARKERTITLE' => $lang['MapBB_markerTitle'],
-		'L_MAPBB_DRAWCANCELTITLE' => $lang['MapBB_drawCancelTitle'],
-		'L_MAPBB_MARKERTOOLTIP' => $lang['MapBB_markerTooltip'],
-		'L_MAPBB_POLYLINESTARTTOOLTIP' => $lang['MapBB_polylineStartTooltip'],
-		'L_MAPBB_POLYLINECONTINUETOOLTIP' => $lang['MapBB_polylineContinueTooltip'],
-		'L_MAPBB_POLYLINEENDTOOLTIP' => $lang['MapBB_polylineEndTooltip'],
-		'L_MAPBB_POLYGONSTARTTOOLTIP' => $lang['MapBB_polygonStartTooltip'],
-		'L_MAPBB_POLYGONCONTINUETOOLTIP' => $lang['MapBB_polygonContinueTooltip'],
-		'L_MAPBB_POLYGONENDTOOLTIP' => $lang['MapBB_polygonEndTooltip'],
-		'L_MAPBB_HELPCONTENTS' => implode(',', array_map('mapbb_array_to_array', $lang['MapBB_helpContents'])),
-
+		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
 		"LAYERS" => $board_config['mapbb_layers'],
 		"DEFAULT_ZOOM" => $board_config['mapbb_default_zoom'],
 		"DEFAULT_POS" => $board_config['mapbb_default_pos'],
@@ -405,13 +358,14 @@ templates/subSilver/overall_header.tpl
 <![endif]-->
 <script src="includes/mapbbcode/leaflet.js"></script>
 <script src="includes/mapbbcode/leaflet.draw.js"></script>
-<script src="includes/mapbbcode/Bing.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
 <script src="includes/mapbbcode/mapbbcode-config.js"></script>
+<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 <script language="Javascript" type="text/javascript">
 <!--
 var mapBBcode = new MapBBCode({
-	windowPath: 'includes/mapbbcode/mapbbcode-window.html',
+	windowPath: 'includes/mapbbcode/',
 	layers: '{LAYERS}'.split(','),
 	defaultZoom: {DEFAULT_ZOOM}+0,
 	defaultPosition: [{DEFAULT_POS}],
@@ -426,43 +380,6 @@ var mapBBcode = new MapBBCode({
 	preferStandardLayerSwitcher: {STANDARD_SWITCHER},
 	uploadButton: {ENABLE_EXTERNAL},
 	hideInsideClasses: []
-});
-mapBBcode.setStrings({
-	close: '{L_MAPBB_CLOSE}',
-	remove: '{L_MAPBB_REMOVE}',
-	apply: '{L_MAPBB_APPLY}',
-	cancel: '{L_MAPBB_CANCEL}',
-	title: '{L_MAPBB_TITLE}',
-	zoomInTitle: '{L_MAPBB_ZOOMINTITLE}',
-	zoomOutTitle: '{L_MAPBB_ZOOMOUTTITLE}',
-	applyTitle: '{L_MAPBB_APPLYTITLE}',
-	cancelTitle: '{L_MAPBB_CANCELTITLE}',
-	fullScreenTitle: '{L_MAPBB_FULLSCREENTITLE}',
-	helpTitle: '{L_MAPBB_HELPTITLE}',
-	outerTitle: '{L_MAPBB_OUTERTITLE}',
-	exportName: '{L_MAPBB_EXPORT}',
-	exportTitle: '{L_MAPBB_EXPORTTITLE}',
-	upload: '{L_MAPBB_UPLOAD}',
-	uploadTitle: '{L_MAPBB_UPLOADTITLE}',
-	uploading: '{L_MAPBB_UPLOADING}',
-	uploadError: '{L_MAPBB_UPLOADERROR}',
-	uploadSuccess: '{L_MAPBB_UPLOADSUCCESS}',
-	sharedFormHeader: '{L_MAPBB_SHAREDFORMHEADER}',
-	sharedFormError: '{L_MAPBB_SHAREDFORMERROR}',
-	sharedFormInvalidCode: '{L_MAPBB_SHAREDFORMINVALIDCODE}',
-	sharedCodeError: '{L_MAPBB_SHAREDCODEERROR}',
-	polylineTitle: '{L_MAPBB_POLYLINETITLE}',
-	polygonTitle: '{L_MAPBB_POLYGONTITLE}',
-	markerTitle: '{L_MAPBB_MARKERTITLE}',
-	drawCancelTitle: '{L_MAPBB_DRAWCANCELTITLE}',
-	markerTooltip: '{L_MAPBB_MARKERTOOLTIP}',
-	polylineStartTooltip: '{L_MAPBB_POLYLINESTARTTOOLTIP}',
-	polylineContinueTooltip: '{L_MAPBB_POLYLINECONTINUETOOLTIP}',
-	polylineEndTooltip: '{L_MAPBB_POLYLINEENDTOOLTIP}',
-	polygonStartTooltip: '{L_MAPBB_POLYGONSTARTTOOLTIP}',
-	polygonContinueTooltip: '{L_MAPBB_POLYGONCONTINUETOOLTIP}',
-	polygonEndTooltip: '{L_MAPBB_POLYGONENDTOOLTIP}',
-	helpContents: [{L_MAPBB_HELPCONTENTS}]
 });
 //-->
 </script>
@@ -497,9 +414,10 @@ templates/subSilver/simple_header.tpl
 <![endif]-->
 <script src="includes/mapbbcode/leaflet.js"></script>
 <script src="includes/mapbbcode/leaflet.draw.js"></script>
-<script src="includes/mapbbcode/Bing.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
 <script src="includes/mapbbcode/mapbbcode-config.js"></script>
+<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 <script language="Javascript" type="text/javascript">
 <!--
 var mapBBcode = new MapBBCode({

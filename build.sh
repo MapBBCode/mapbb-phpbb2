@@ -1,4 +1,11 @@
 #!/bin/sh
+DISTFILE=mapbbcode-latest.zip
+wget -nv http://mapbbcode.org/dist/$DISTFILE
+unzip -q $DISTFILE
+rm $DISTFILE
+cp -r mapbbcode/* root/mapbbcode/
+rm -r mapbbcode
+
 TARGET=dist/mapbbcode_mod.zip
 DIR=mapbbcode
 mkdir $DIR
