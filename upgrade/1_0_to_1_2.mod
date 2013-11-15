@@ -34,7 +34,7 @@
 ##############################################################
 ## MOD History:
 ##
-##   2013-11-14 - Version 1.2
+##   2013-11-15 - Version 1.2
 ##      - MapBBCode 1.1.0
 ##      - reworked translations
 ##
@@ -61,58 +61,9 @@ copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ SQL ]------------------------------------------
 #
-# Upload and run as forum admin: db_install.php
+# insert those records manually:
 #
-# !!!!(Don't forget to delete db_install.php from the server after you have finished installing this mod!)!!!!
-#
-# or insert those records manually:
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_enable_external','0');
-#
-#-----[ OPEN ]------------------------------------------
-#
-root/admin/admin_mapbbcode.php
-#
-#-----[ FIND ]------------------------------------------
-#
-$std_switcher_no = ( !$new['mapbb_standard_switcher'] ) ? "checked=\"checked\"" : "";
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-$enable_external_yes = ( $new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
-$enable_external_no = ( !$new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
-#
-#-----[ FIND ]------------------------------------------
-#
-	"L_STANDARD_SWITCHER" => $lang['MapBB_Standard_switcher'],
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	"L_ENABLE_EXTERNAL" => $lang['MapBB_Enable_external'],
-#
-#-----[ FIND ]------------------------------------------
-#
-	"S_STANDARD_SWITCHER_NO" => $std_switcher_no,
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	"S_ENABLE_EXTERNAL_YES" => $enable_external_yes,
-	"S_ENABLE_EXTERNAL_NO" => $enable_external_no,
-#
-#-----[ OPEN ]------------------------------------------
-#
-root/templates/admin/mapbbcode_body.tpl
-#
-#-----[ FIND ]------------------------------------------
-#
-		<td class="row2"><input type="radio" name="standard_switcher" value="1" {S_STANDARD_SWITCHER_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="standard_switcher" value="0" {S_STANDARD_SWITCHER_NO} /> {L_NO}</td>
-	</tr>
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	<tr>
-		<td class="row1">{L_ENABLE_EXTERNAL}</td>
-		<td class="row2"><input type="radio" name="enable_external" value="1" {S_ENABLE_EXTERNAL_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="enable_external" value="0" {S_ENABLE_EXTERNAL_NO} /> {L_NO}</td>
-	</tr>
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -153,7 +104,7 @@ includes/bbcode.php
 #
 #-----[ FIND ]------------------------------------------
 #
-	$patterns[] = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
 	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
 #
 #-----[ REPLACE WITH ]------------------------------------------
@@ -225,6 +176,7 @@ includes/page_header.php
 #-----[ REPLACE WITH ]------------------------------------------
 #
 		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
+                "S_ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'],
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -265,11 +217,12 @@ templates/subSilver/overall_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
-	fullFromStart: {ALWAYS_FULL},
+	fullFromStart: isTrue('{ALWAYS_FULL}'),
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
+        uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -324,11 +277,12 @@ templates/subSilver/simple_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
-	fullFromStart: {ALWAYS_FULL},
+	fullFromStart: isTrue('{ALWAYS_FULL}'),
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
+        uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ SAVE/CLOSE ALL FILES ]------------------------------------------
 #

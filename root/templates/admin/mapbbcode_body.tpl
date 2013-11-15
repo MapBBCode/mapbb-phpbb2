@@ -117,28 +117,6 @@ var config = new MapBBCodeConfig({
 //        editorTypeFixed: true, // uncomment if needed
 	editorInWindow: isTrue('{EDITOR_WINDOW}') // set to true or false is needed
 });
-config.setStrings({
-	view: '{L_VIEW}',
-	editor: '{L_EDITOR}',
-	editInWindow: '{L_EDITINWINDOW}',
-	editInPanel: '{L_EDITINPANEL}',
-	viewNormal: '{L_VIEWNORMAL}',
-	viewFull: '{L_VIEWFULL}',
-	viewTitle: '{L_VIEWTITLE}',
-	editorTitle: '{L_EDITORTITLE}',
-	editInWindowTitle: '{L_EDITINWINDOWTITLE}',
-	editInPanelTitle: '{L_EDITINPANELTITLE}',
-	viewNormalTitle: '{L_VIEWNORMALTITLE}',
-	viewFullTitle: '{L_VIEWFULLTITLE}',
-	growTitle: '{L_GROWTITLE}',
-	shrinkTitle: '{L_SHRINKTITLE}',
-	zoomInTitle: '{L_ZOOMINTITLE}',
-	zoomOutTitle: '{L_ZOOMOUTTITLE}',
-        selectLayer: '{L_SELECT_LAYER}',
-        addLayer: '{L_ADD_LAYER}',
-        keyNeeded: '{L_BING_KEY}',
-        keyNeededAlert: '{L_KEY_NEEDED}'
-});
 config.on('show change', function(options) {
 	var f = document.forms['mapfm'];
 	f.elements['default_zoom'].value = options.defaultZoom;
