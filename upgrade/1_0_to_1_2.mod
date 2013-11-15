@@ -176,7 +176,7 @@ includes/page_header.php
 #-----[ REPLACE WITH ]------------------------------------------
 #
 		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
-                "S_ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'],
+		"S_ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'],
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -222,7 +222,7 @@ templates/subSilver/overall_header.tpl
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
-        uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
+	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -282,7 +282,7 @@ templates/subSilver/simple_header.tpl
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
-        uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
+	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ SAVE/CLOSE ALL FILES ]------------------------------------------
 #
