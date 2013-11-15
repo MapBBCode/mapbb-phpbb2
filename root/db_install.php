@@ -28,8 +28,8 @@ else
 		'editor_window' => 1,
 		'outer_link' => '',
 		'allowed_tags' => '[auib]|span|br|em|strong|tt',
-                'standard_switcher' => '1',
-                'enable_external' => '0',
+		'standard_switcher' => '1',
+		'enable_external' => '0',
 		'layers' => 'OpenStreetMap'
 	);
 

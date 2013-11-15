@@ -6,6 +6,10 @@ rm $DISTFILE
 cp -r mapbbcode/* root/mapbbcode/
 rm -r mapbbcode
 
+iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/Russian.js > Russian.js
+iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/Russian.Config.js > Russian.Config.js
+mv Russian*.js root/mapbbcode/lang/
+
 TARGET=dist/mapbbcode_mod.zip
 DIR=mapbbcode
 mkdir $DIR
