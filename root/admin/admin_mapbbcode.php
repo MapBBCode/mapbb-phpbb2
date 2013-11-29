@@ -34,6 +34,7 @@ else
 {
 	include($phpbb_root_path . 'language/lang_english/lang_mapbbcode.' . $phpEx);
 }
+include($phpbb_root_path . 'includes/mapbbcode_addons.' . $phpEx);
 
 //
 // Pull all config data
@@ -94,6 +95,7 @@ $template->assign_vars(array(
 	"L_YES" => $lang['Yes'],
 	"L_NO" => $lang['No'],
 	"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
+	"L_MAPBB_JS_ADDONS" => str_replace('%base%', '../includes/mapbbcode', $lang['MapBB_JS_Addons']),
 	"L_MAPBBCODE_CONFIG" => $lang['MapBB_Config'],
 	"L_MAPBBCODE_CONFIG_EXPLAIN" => $lang['MapBB_Config_explain'],
 	"L_PANEL_CONFIG" => $lang['MapBB_Panel_Config'],

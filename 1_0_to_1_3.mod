@@ -1,12 +1,12 @@
 ## EasyMOD compliant
 ##############################################################
-## MOD Title: MapBBCode
+## MOD Title: MapBBCode Upgrade from 1.0
 ## MOD Author: Zverik <zverik@textual.ru> (Ilya Zverev)
-## MOD Description: Upgrade [map] bbcode MOD to 1.1
-## MOD Version: 1.1
+## MOD Description: Upgrade [map] bbcode MOD from 1.0 to 1.3
+## MOD Version: 1.3
 ##
 ## Installation Level: Easy
-## Installation Time: 5 Minutes
+## Installation Time: 15 Minutes
 ## Files To Edit: 10
 ##		posting.php
 ##		privmsg.php
@@ -34,10 +34,7 @@
 ##############################################################
 ## MOD History:
 ##
-##   2013-10-29 - Version 1.1
-##      - Support for MapBBCode Share
-##
-##   2013-10-08 - Version 1.0
+##   2013-11-29 - Version 1.3
 ##      - initial release
 ##
 ##############################################################
@@ -51,63 +48,16 @@
 #
 copy root/language/lang_mapbbcode.php to language/lang_english/lang_mapbbcode.php
 copy root/language/lang_mapbbcode_russian.php to language/lang_russian/lang_mapbbcode.php
-copy root/mapbbcode/mapbbcode.js to includes/mapbbcode/mapbbcode.js
-copy root/mapbbcode/mapbbcode-window.html to includes/mapbbcode/mapbbcode-window.html
+copy root/admin/admin_mapbbcode.php to admin/admin_mapbbcode.php
+copy root/templates/admin/mapbbcode_body.tpl to templates/subSilver/admin/mapbbcode_body.tpl
+copy root/mapbbcode_addons.php to includes/mapbbcode_addons.php
+copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ SQL ]------------------------------------------
 #
-# Upload and run as forum admin: db_install.php
+# insert those records manually:
 #
-# !!!!(Don't forget to delete db_install.php from the server after you have finished installing this mod!)!!!!
-#
-# or insert those records manually:
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('mapbb_enable_external','0');
-#
-#-----[ OPEN ]------------------------------------------
-#
-root/admin/admin_mapbbcode.php
-#
-#-----[ FIND ]------------------------------------------
-#
-$std_switcher_no = ( !$new['mapbb_standard_switcher'] ) ? "checked=\"checked\"" : "";
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-$enable_external_yes = ( $new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
-$enable_external_no = ( !$new['mapbb_enable_external'] ) ? "checked=\"checked\"" : "";
-#
-#-----[ FIND ]------------------------------------------
-#
-	"L_STANDARD_SWITCHER" => $lang['MapBB_Standard_switcher'],
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	"L_ENABLE_EXTERNAL" => $lang['MapBB_Enable_external'],
-#
-#-----[ FIND ]------------------------------------------
-#
-	"S_STANDARD_SWITCHER_NO" => $std_switcher_no,
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	"S_ENABLE_EXTERNAL_YES" => $enable_external_yes,
-	"S_ENABLE_EXTERNAL_NO" => $enable_external_no,
-#
-#-----[ OPEN ]------------------------------------------
-#
-root/templates/admin/mapbbcode_body.tpl
-#
-#-----[ FIND ]------------------------------------------
-#
-		<td class="row2"><input type="radio" name="standard_switcher" value="1" {S_STANDARD_SWITCHER_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="standard_switcher" value="0" {S_STANDARD_SWITCHER_NO} /> {L_NO}</td>
-	</tr>
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	<tr>
-		<td class="row1">{L_ENABLE_EXTERNAL}</td>
-		<td class="row2"><input type="radio" name="enable_external" value="1" {S_ENABLE_EXTERNAL_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="enable_external" value="0" {S_ENABLE_EXTERNAL_NO} /> {L_NO}</td>
-	</tr>
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -148,7 +98,7 @@ includes/bbcode.php
 #
 #-----[ FIND ]------------------------------------------
 #
-	$patterns[] = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
 	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
 #
 #-----[ REPLACE WITH ]------------------------------------------
@@ -190,21 +140,47 @@ includes/page_header.php
 #
 #-----[ FIND ]------------------------------------------
 #
-		'L_MAPBB_OUTERTITLE' => $lang['MapBB_outerTitle'],
+		include($phpbb_root_path . 'language/lang_english/lang_mapbbcode.' . $phpEx);
+	}
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
-		'L_MAPBB_EXPORT' => $lang['MapBB_export'],
-		'L_MAPBB_EXPORTTITLE' => $lang['MapBB_exportTitle'],
-		'L_MAPBB_UPLOAD' => $lang['MapBB_upload'],
-		'L_MAPBB_UPLOADTITLE' => $lang['MapBB_uploadTitle'],
-		'L_MAPBB_UPLOADING' => $lang['MapBB_uploading'],
-		'L_MAPBB_UPLOADERROR' => $lang['MapBB_uploadError'],
-		'L_MAPBB_UPLOADSUCCESS' => $lang['MapBB_uploadSuccess'],
-		'L_MAPBB_SHAREDFORMHEADER' => $lang['MapBB_sharedFormHeader'],
-		'L_MAPBB_SHAREDFORMERROR' => $lang['MapBB_sharedFormError'],
-		'L_MAPBB_SHAREDFORMINVALIDCODE' => $lang['MapBB_sharedFormInvalidCode'],
-		'L_MAPBB_SHAREDCODEERROR' => $lang['MapBB_sharedCodeError'],
+	include($phpbb_root_path . 'includes/mapbbcode_addons.' . $phpEx);
+#
+#-----[ FIND ]------------------------------------------
+#
+		'L_MAPBB_CLOSE' => $lang['MapBB_close'],
+		'L_MAPBB_REMOVE' => $lang['MapBB_remove'],
+		'L_MAPBB_APPLY' => $lang['MapBB_apply'],
+		'L_MAPBB_CANCEL' => $lang['MapBB_cancel'],
+		'L_MAPBB_TITLE' => $lang['MapBB_title'],
+		'L_MAPBB_BING' => $lang['MapBB_bing'],
+		'L_MAPBB_ZOOMINTITLE' => $lang['MapBB_zoomInTitle'],
+		'L_MAPBB_ZOOMOUTTITLE' => $lang['MapBB_zoomOutTitle'],
+		'L_MAPBB_APPLYTITLE' => $lang['MapBB_applyTitle'],
+		'L_MAPBB_CANCELTITLE' => $lang['MapBB_cancelTitle'],
+		'L_MAPBB_FULLSCREENTITLE' => $lang['MapBB_fullScreenTitle'],
+		'L_MAPBB_HELPTITLE' => $lang['MapBB_helpTitle'],
+		'L_MAPBB_OUTERTITLE' => $lang['MapBB_outerTitle'],
+		'L_MAPBB_POLYLINETITLE' => $lang['MapBB_polylineTitle'],
+		'L_MAPBB_POLYGONTITLE' => $lang['MapBB_polygonTitle'],
+		'L_MAPBB_MARKERTITLE' => $lang['MapBB_markerTitle'],
+		'L_MAPBB_DRAWCANCELTITLE' => $lang['MapBB_drawCancelTitle'],
+		'L_MAPBB_MARKERTOOLTIP' => $lang['MapBB_markerTooltip'],
+		'L_MAPBB_POLYLINESTARTTOOLTIP' => $lang['MapBB_polylineStartTooltip'],
+		'L_MAPBB_POLYLINECONTINUETOOLTIP' => $lang['MapBB_polylineContinueTooltip'],
+		'L_MAPBB_POLYLINEENDTOOLTIP' => $lang['MapBB_polylineEndTooltip'],
+		'L_MAPBB_POLYGONSTARTTOOLTIP' => $lang['MapBB_polygonStartTooltip'],
+		'L_MAPBB_POLYGONCONTINUETOOLTIP' => $lang['MapBB_polygonContinueTooltip'],
+		'L_MAPBB_POLYGONENDTOOLTIP' => $lang['MapBB_polygonEndTooltip'],
+		'L_MAPBB_HELPCONTENTS' => implode(',', array_map('mapbb_array_to_array', $lang['MapBB_helpContents'])),
+
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
+		"L_MAPBB_JS_ADDONS" => str_replace('%base%', 'includes/mapbbcode', $lang['MapBB_JS_Addons']),
+		"S_ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'],
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -224,37 +200,68 @@ templates/subSilver/overall_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
+<script src="includes/mapbbcode/Bing.js"></script>
+<script src="includes/mapbbcode/mapbbcode.js"></script>
+<script src="includes/mapbbcode/mapbbcode-config.js"></script>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+<script src="includes/mapbbcode/mapbbcode.js"></script>
+<script src="includes/mapbbcode/mapbbcode-config.js"></script>
+<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
+{L_MAPBB_JS_ADDONS}
+#
+#-----[ FIND ]------------------------------------------
+#
 	libPath: 'includes/mapbbcode/',
 #
 #-----[ REPLACE WITH ]------------------------------------------
 #
-	windowPath: 'includes/mapbbcode/mapbbcode-window.html',
+	windowPath: 'includes/mapbbcode/',
 #
 #-----[ FIND ]------------------------------------------
 #
-	fullFromStart: {ALWAYS_FULL},
+	fullFromStart: isTrue('{ALWAYS_FULL}'),
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
+	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ FIND ]------------------------------------------
 #
+mapBBcode.setStrings({
+	close: '{L_MAPBB_CLOSE}',
+	remove: '{L_MAPBB_REMOVE}',
+	apply: '{L_MAPBB_APPLY}',
+	cancel: '{L_MAPBB_CANCEL}',
+	title: '{L_MAPBB_TITLE}',
+	bing: '{L_MAPBB_BING}',
+	zoomInTitle: '{L_MAPBB_ZOOMINTITLE}',
+	zoomOutTitle: '{L_MAPBB_ZOOMOUTTITLE}',
+	applyTitle: '{L_MAPBB_APPLYTITLE}',
+	cancelTitle: '{L_MAPBB_CANCELTITLE}',
+	fullScreenTitle: '{L_MAPBB_FULLSCREENTITLE}',
+	helpTitle: '{L_MAPBB_HELPTITLE}',
 	outerTitle: '{L_MAPBB_OUTERTITLE}',
+	polylineTitle: '{L_MAPBB_POLYLINETITLE}',
+	polygonTitle: '{L_MAPBB_POLYGONTITLE}',
+	markerTitle: '{L_MAPBB_MARKERTITLE}',
+	drawCancelTitle: '{L_MAPBB_DRAWCANCELTITLE}',
+	markerTooltip: '{L_MAPBB_MARKERTOOLTIP}',
+	polylineStartTooltip: '{L_MAPBB_POLYLINESTARTTOOLTIP}',
+	polylineContinueTooltip: '{L_MAPBB_POLYLINECONTINUETOOLTIP}',
+	polylineEndTooltip: '{L_MAPBB_POLYLINEENDTOOLTIP}',
+	polygonStartTooltip: '{L_MAPBB_POLYGONSTARTTOOLTIP}',
+	polygonContinueTooltip: '{L_MAPBB_POLYGONCONTINUETOOLTIP}',
+	polygonEndTooltip: '{L_MAPBB_POLYGONENDTOOLTIP}',
+	helpContents: [{L_MAPBB_HELPCONTENTS}]
+});
 #
-#-----[ AFTER, ADD ]------------------------------------------
+#-----[ REPLACE WITH ]------------------------------------------
 #
-	exportName: '{L_MAPBB_EXPORT}',
-	exportTitle: '{L_MAPBB_EXPORTTITLE}',
-	upload: '{L_MAPBB_UPLOAD}',
-	uploadTitle: '{L_MAPBB_UPLOADTITLE}',
-	uploading: '{L_MAPBB_UPLOADING}',
-	uploadError: '{L_MAPBB_UPLOADERROR}',
-	uploadSuccess: '{L_MAPBB_UPLOADSUCCESS}',
-	sharedFormHeader: '{L_MAPBB_SHAREDFORMHEADER}',
-	sharedFormError: '{L_MAPBB_SHAREDFORMERROR}',
-	sharedFormInvalidCode: '{L_MAPBB_SHAREDFORMINVALIDCODE}',
-	sharedCodeError: '{L_MAPBB_SHAREDCODEERROR}',
+// no strings
 #
 #-----[ OPEN ]------------------------------------------
 #
@@ -262,11 +269,26 @@ templates/subSilver/simple_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
-	fullFromStart: {ALWAYS_FULL},
+<script src="includes/mapbbcode/Bing.js"></script>
+<script src="includes/mapbbcode/mapbbcode.js"></script>
+<script src="includes/mapbbcode/mapbbcode-config.js"></script>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+<script src="includes/mapbbcode/mapbbcode.js"></script>
+<script src="includes/mapbbcode/mapbbcode-config.js"></script>
+<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
+{L_MAPBB_JS_ADDONS}
+#
+#-----[ FIND ]------------------------------------------
+#
+	fullFromStart: isTrue('{ALWAYS_FULL}'),
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
+	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ SAVE/CLOSE ALL FILES ]------------------------------------------
 #

@@ -13,10 +13,9 @@ mv Russian*.js root/mapbbcode/lang/
 TARGET=dist/mapbbcode_mod.zip
 DIR=mapbbcode
 mkdir $DIR
-cp install.mod $DIR
+cp *.mod $DIR
 cp README.md $DIR
 cp -r root $DIR
-cp -r upgrade $DIR
 rm $TARGET
 zip -qr $TARGET $DIR
 rm -r $DIR

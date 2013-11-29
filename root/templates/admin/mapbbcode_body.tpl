@@ -6,6 +6,7 @@
 <script src="../includes/mapbbcode/mapbbcode-config.js"></script>
 <script src="../includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.Config.js"></script>
 <script src="../includes/mapbbcode/proprietary/Bing.js"></script>
+{L_MAPBB_JS_ADDONS}
 
 <h1>{L_MAPBBCODE_CONFIG}</h1>
 

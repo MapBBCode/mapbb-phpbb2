@@ -29,6 +29,13 @@ Those steps are based on [the official instructions](http://easymod.sourceforge.
 3. Open `install.mod` with a text editor and follow every instruction precisely. There will be a lot of copying and pasting.
 4. Go to the forum and check that [map] bbcode works.
 
+## Add-ons and proprietary layers
+
+To add an add-on or a proprietary layer, you would have to modify two files:
+
+* `includes/mapbbcode_addons.php`
+* `includes/mapbbcode/mapbbcode-window.html`
+
 ## List of changes
 
 New files are understandable: one stand-alone script for inserting configuration values
