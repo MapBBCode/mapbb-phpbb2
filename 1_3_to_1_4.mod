@@ -37,7 +37,6 @@
 #
 # Copy new script and update MapBBCode library
 #
-copy root/mapbbcode_addons.php to includes/mapbbcode_addons.php
 copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ OPEN ]------------------------------------------
@@ -72,6 +71,30 @@ templates/subSilver/admin/mapbbcode_body.tpl
 <script src="../includes/mapbbcode/leaflet.js"></script>
 <script src="../includes/mapbbcode/mapbbcode-config.js"></script>
 <script src="../includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.config.js"></script>
+#
+#-----[ OPEN ]------------------------------------------
+#
+language/lang_english/lang_mapbbcode.php
+#
+#-----[ FIND ]------------------------------------------
+#
+$lang['MapBB_Lang_JS'] = 'English';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+$lang['MapBB_Lang_JS'] = 'en';
+#
+#-----[ OPEN ]------------------------------------------
+#
+language/lang_russian/lang_mapbbcode.php
+#
+#-----[ FIND ]------------------------------------------
+#
+$lang['MapBB_Lang_JS'] = 'Russian';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+$lang['MapBB_Lang_JS'] = 'ru';
 #
 #-----[ OPEN ]------------------------------------------
 #
