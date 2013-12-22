@@ -2,8 +2,8 @@
 ##############################################################
 ## MOD Title: MapBBCode Upgrade from 1.0
 ## MOD Author: Zverik <zverik@textual.ru> (Ilya Zverev)
-## MOD Description: Upgrade [map] bbcode MOD from 1.0 to 1.3
-## MOD Version: 1.3
+## MOD Description: Upgrade [map] bbcode MOD from 1.0 to 1.4
+## MOD Version: 1.4
 ##
 ## Installation Level: Easy
 ## Installation Time: 15 Minutes
@@ -34,7 +34,7 @@
 ##############################################################
 ## MOD History:
 ##
-##   2013-11-29 - Version 1.3
+##   2013-12-22 - Version 1.4
 ##      - initial release
 ##
 ##############################################################
@@ -50,7 +50,7 @@ copy root/language/lang_mapbbcode.php to language/lang_english/lang_mapbbcode.ph
 copy root/language/lang_mapbbcode_russian.php to language/lang_russian/lang_mapbbcode.php
 copy root/admin/admin_mapbbcode.php to admin/admin_mapbbcode.php
 copy root/templates/admin/mapbbcode_body.tpl to templates/subSilver/admin/mapbbcode_body.tpl
-copy root/mapbbcode_addons.php to includes/mapbbcode_addons.php
+copy root/includes/mapbbcode_addons.php to includes/mapbbcode_addons.php
 copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ SQL ]------------------------------------------
@@ -149,6 +149,14 @@ includes/page_header.php
 #
 #-----[ FIND ]------------------------------------------
 #
+		"LAYERS" => $board_config['mapbb_layers'],
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		"LAYERS" => str_replace("'", "\\'", $board_config['mapbb_layers']),
+#
+#-----[ FIND ]------------------------------------------
+#
 		'L_MAPBB_CLOSE' => $lang['MapBB_close'],
 		'L_MAPBB_REMOVE' => $lang['MapBB_remove'],
 		'L_MAPBB_APPLY' => $lang['MapBB_apply'],
@@ -200,15 +208,22 @@ templates/subSilver/overall_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
+<!--[if lte IE 8]>
+	<link rel="stylesheet" href="includes/mapbbcode/leaflet.ie.css" />
+	<link rel="stylesheet" href="includes/mapbbcode/leaflet.draw.ie.css" />
+<![endif]-->
+<script src="includes/mapbbcode/leaflet.js"></script>
+<script src="includes/mapbbcode/leaflet.draw.js"></script>
 <script src="includes/mapbbcode/Bing.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
 <script src="includes/mapbbcode/mapbbcode-config.js"></script>
 #
 #-----[ REPLACE WITH ]------------------------------------------
 #
+<script src="includes/mapbbcode/leaflet.js"></script>
+<script src="includes/mapbbcode/leaflet.draw.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
-<script src="includes/mapbbcode/mapbbcode-config.js"></script>
-<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/LayerList.js"></script>
 <script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 {L_MAPBB_JS_ADDONS}
 #
@@ -222,12 +237,12 @@ templates/subSilver/overall_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
-	fullFromStart: isTrue('{ALWAYS_FULL}'),
+	fullFromStart: {ALWAYS_FULL},
 #
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	outerLinkTemplate: '{OUTER_LINK}',
-	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
+	uploadButton: {ENABLE_EXTERNAL},
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -269,26 +284,24 @@ templates/subSilver/simple_header.tpl
 #
 #-----[ FIND ]------------------------------------------
 #
+<link rel="stylesheet" href="includes/mapbbcode/leaflet.draw.css" />
+<!--[if lte IE 8]>
+	<link rel="stylesheet" href="includes/mapbbcode/leaflet.ie.css" />
+	<link rel="stylesheet" href="includes/mapbbcode/leaflet.draw.ie.css" />
+<![endif]-->
+<script src="includes/mapbbcode/leaflet.js"></script>
+<script src="includes/mapbbcode/leaflet.draw.js"></script>
 <script src="includes/mapbbcode/Bing.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
 <script src="includes/mapbbcode/mapbbcode-config.js"></script>
 #
 #-----[ REPLACE WITH ]------------------------------------------
 #
+<script src="includes/mapbbcode/leaflet.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
-<script src="includes/mapbbcode/mapbbcode-config.js"></script>
-<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/LayerList.js"></script>
 <script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 {L_MAPBB_JS_ADDONS}
-#
-#-----[ FIND ]------------------------------------------
-#
-	fullFromStart: isTrue('{ALWAYS_FULL}'),
-#
-#-----[ AFTER, ADD ]------------------------------------------
-#
-	outerLinkTemplate: '{OUTER_LINK}',
-	uploadButton: isTrue('{S_ENABLE_EXTERNAL}'),
 #
 #-----[ SAVE/CLOSE ALL FILES ]------------------------------------------
 #

@@ -20,6 +20,7 @@
 
 $lang['MapBB_JS_Addons'] = '';
 // put MapBBCode add-ons here
+$lang['MapBB_JS_Addons'] .= '<script src="%base%/proprietary/Bing.js"></script>';
 //$lang['MapBB_JS_Addons'] .= '<script src="%base%/proprietary/Esri.js"></script>';
 //$lang['MapBB_JS_Addons'] .= '<script src="%base%/proprietary/Google.js"></script>';
 //$lang['MapBB_JS_Addons'] .= '<script src="%base%/proprietary/Yandex.js"></script>';

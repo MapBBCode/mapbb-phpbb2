@@ -99,7 +99,7 @@ $template->assign_vars(array(
 	"L_MAPBBCODE_CONFIG" => $lang['MapBB_Config'],
 	"L_MAPBBCODE_CONFIG_EXPLAIN" => $lang['MapBB_Config_explain'],
 	"L_PANEL_CONFIG" => $lang['MapBB_Panel_Config'],
-	"L_LAYERS" => $lang['MapBB_Layers'],
+	"L_LAYERS" => str_replace("'", "\\'", $lang['MapBB_Layers']),
 	"L_DEFAULT_ZOOM_POS" => $lang['MapBB_Default_zoom_pos'],
 	"L_PANEL_SIZE" => $lang['MapBB_Panel_size'],
 	"L_FULL_HEIGHT" => $lang['MapBB_Full_height'],

@@ -37,7 +37,7 @@
 #
 # Copy new script and update MapBBCode library
 #
-copy root/mapbbcode_addons.php to includes/mapbbcode_addons.php
+copy root/includes/mapbbcode_addons.php to includes/mapbbcode_addons.php
 copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ OPEN ]------------------------------------------

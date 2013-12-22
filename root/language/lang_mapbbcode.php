@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 $lang['bbcode_map_help'] = 'Insert a map: [map]latitude,longitude(title); ...[/map]  (alt+m)';
-$lang['MapBB_Lang_JS'] = 'English';
+$lang['MapBB_Lang_JS'] = 'en';
 $lang['MapBB_Config'] = 'MapBBCode Configuration';
 $lang['MapBB_Config_explain'] = 'This form allows you to customize map panels and layers in both view and edit modes.';
 $lang['MapBB_Panel_Config'] = 'Map panel';

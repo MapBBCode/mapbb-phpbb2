@@ -3,7 +3,7 @@
 ## MOD Title: MapBBCode
 ## MOD Author: Zverik <zverik@textual.ru> (Ilya Zverev)
 ## MOD Description: Adds [map] bbcode and its editor to phpBB 2
-## MOD Version: 1.3
+## MOD Version: 1.4
 ##
 ## Installation Level: Easy
 ## Installation Time: 15 Minutes
@@ -34,6 +34,10 @@
 ##############################################################
 ## MOD History:
 ##
+##   2013-12-22 - Version 1.4
+##      - MapBBCode 1.2.0
+##      - fixed apostrophes in layers
+##
 ##   2013-11-29 - Version 1.3
 ##      - MapBBCode 1.1.2
 ##      - simplified addons installation
@@ -60,7 +64,7 @@ copy root/language/lang_mapbbcode.php to language/lang_english/lang_mapbbcode.ph
 copy root/language/lang_mapbbcode_russian.php to language/lang_russian/lang_mapbbcode.php
 copy root/admin/admin_mapbbcode.php to admin/admin_mapbbcode.php
 copy root/templates/admin/mapbbcode_body.tpl to templates/subSilver/admin/mapbbcode_body.tpl
-copy root/mapbbcode_addons.php to includes/mapbbcode_addons.php
+copy root/includes/mapbbcode_addons.php to includes/mapbbcode_addons.php
 copy root/mapbbcode/*.* to includes/mapbbcode/*.*
 #
 #-----[ SQL ]------------------------------------------
@@ -271,7 +275,7 @@ if( $mapbbcode_present )
 	$template->assign_vars(array(
 		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
 		"L_MAPBB_JS_ADDONS" => str_replace('%base%', 'includes/mapbbcode', $lang['MapBB_JS_Addons']),
-		"LAYERS" => $board_config['mapbb_layers'],
+		"LAYERS" => str_replace("'", "\\'", $board_config['mapbb_layers']),
 		"DEFAULT_ZOOM" => $board_config['mapbb_default_zoom'],
 		"DEFAULT_POS" => $board_config['mapbb_default_pos'],
 		"VIEW_WIDTH" => $board_config['mapbb_view_width'],
@@ -360,15 +364,10 @@ templates/subSilver/overall_header.tpl
 <!-- BEGIN switch_enable_mapbbcode -->
 <link rel="stylesheet" href="includes/mapbbcode/leaflet.css" />
 <link rel="stylesheet" href="includes/mapbbcode/leaflet.draw.css" />
-<!--[if lte IE 8]>
-	<link rel="stylesheet" href="includes/mapbbcode/leaflet.ie.css" />
-	<link rel="stylesheet" href="includes/mapbbcode/leaflet.draw.ie.css" />
-<![endif]-->
 <script src="includes/mapbbcode/leaflet.js"></script>
 <script src="includes/mapbbcode/leaflet.draw.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
-<script src="includes/mapbbcode/mapbbcode-config.js"></script>
-<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/LayerList.js"></script>
 <script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 {L_MAPBB_JS_ADDONS}
 <script language="Javascript" type="text/javascript">
@@ -386,8 +385,8 @@ var mapBBcode = new MapBBCode({
 	windowHeight: {WINDOW_HEIGHT}+0,
 	fullFromStart: {ALWAYS_FULL},
 	outerLinkTemplate: '{OUTER_LINK}',
-	preferStandardLayerSwitcher: {STANDARD_SWITCHER},
 	uploadButton: {ENABLE_EXTERNAL},
+	preferStandardLayerSwitcher: {STANDARD_SWITCHER},
 	hideInsideClasses: []
 });
 //-->
@@ -416,13 +415,9 @@ templates/subSilver/simple_header.tpl
 #
 <!-- BEGIN switch_enable_mapbbcode -->
 <link rel="stylesheet" href="includes/mapbbcode/leaflet.css" />
-<!--[if lte IE 8]>
-	<link rel="stylesheet" href="includes/mapbbcode/leaflet.ie.css" />
-<![endif]-->
 <script src="includes/mapbbcode/leaflet.js"></script>
 <script src="includes/mapbbcode/mapbbcode.js"></script>
-<script src="includes/mapbbcode/mapbbcode-config.js"></script>
-<script src="includes/mapbbcode/proprietary/Bing.js"></script>
+<script src="includes/mapbbcode/LayerList.js"></script>
 <script src="includes/mapbbcode/lang/{L_MAPBB_LANG_JS}.js"></script>
 {L_MAPBB_JS_ADDONS}
 <script language="Javascript" type="text/javascript">

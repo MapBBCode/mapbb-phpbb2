@@ -6,9 +6,10 @@ unzip -q $DISTFILE
 rm $DISTFILE
 mv mapbbcode root/
 
-iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/Russian.js > Russian.js
-iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/Russian.Config.js > Russian.Config.js
-mv Russian*.js root/mapbbcode/lang/
+iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/ru.js > ru.js
+iconv -f UTF-8 -t WINDOWS-1251 root/mapbbcode/lang/ru.config.js > ru.config.js
+mv ru*.js root/mapbbcode/lang/
+printf "5d\nw\n" | ed root/mapbbcode/mapbbcode-window.html
 
 TARGET=dist/mapbbcode_mod.zip
 DIR=mapbbcode
