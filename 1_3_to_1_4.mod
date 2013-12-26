@@ -98,6 +98,46 @@ $lang['MapBB_Lang_JS'] = 'ru';
 #
 #-----[ OPEN ]------------------------------------------
 #
+includes/bbcode.php
+#
+#-----[ FIND ]------------------------------------------
+#
+	$bbcode_tpl['mapid'] = str_replace('{MAPID}', '\\2', $bbcode_tpl['mapid']);
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+
+	$bbcode_tpl['mapid'] = str_replace('{MAPID}', '\\3', $bbcode_tpl['mapid']);
+#
+#-----[ FIND ]------------------------------------------
+#
+	$mapre = '#(\[map(?:=[0-9,.-]+|id)?)(:[a-fA-F0-9]+)?(\].*?\[/map(?:id)?\])#si';
+	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
+	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$patterns[] = $mapre;
+	$replacements[] = $bbcode_tpl['map'];
+
+	global $board_config;
+	if (isset($board_config) && $board_config['mapbb_enable_external'])
+	{
+		$patterns[] = '#\[mapid(:[a-fA-F0-9]+)?\]([a-z]+)\[/mapid\]#i';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
+	$patterns[] = $mapre;
+	$replacements[] = $bbcode_tpl['map'];
+
+	global $board_config;
+	if (isset($board_config) && $board_config['mapbb_enable_external'])
+	{
+		$mapre = '#\[mapid(:[a-fA-F0-9]+)?(\]([a-z]+)\[/mapid\])#i';
+		$text = preg_replace_callback($mapre, create_function('$m','return "[mapid:".make_bbcode_uid().$m[2];'), $text);
+		$patterns[] = $mapre;
+#
+#-----[ OPEN ]------------------------------------------
+#
 includes/mapbbcode_addons.php
 #
 #-----[ FIND ]------------------------------------------

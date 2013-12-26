@@ -94,18 +94,7 @@ includes/bbcode.php
 #-----[ AFTER, ADD ]------------------------------------------
 #
 	$bbcode_tpl['mapid'] = str_replace('{DIVID}', '\\1', $bbcode_tpl['mapid']);
-	$bbcode_tpl['mapid'] = str_replace('{MAPID}', '\\2', $bbcode_tpl['mapid']);
-#
-#-----[ FIND ]------------------------------------------
-#
-	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
-	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
-#
-#-----[ REPLACE WITH ]------------------------------------------
-#
-	$mapre = '#(\[map(?:=[0-9,.-]+|id)?)(:[a-fA-F0-9]+)?(\].*?\[/map(?:id)?\])#si';
-	$text = preg_replace_callback($mapre, create_function('$m','return $m[1].":".make_bbcode_uid().$m[3];'), $text);
-	$mapre = '#(\[map(?:=[0-9,.-]+)?)(:[a-fA-F0-9]+)?(\].*?\[/map\])#si';
+	$bbcode_tpl['mapid'] = str_replace('{MAPID}', '\\3', $bbcode_tpl['mapid']);
 #
 #-----[ FIND ]------------------------------------------
 #
@@ -117,7 +106,9 @@ includes/bbcode.php
 	global $board_config;
 	if (isset($board_config) && $board_config['mapbb_enable_external'])
 	{
-		$patterns[] = '#\[mapid(:[a-fA-F0-9]+)?\]([a-z]+)\[/mapid\]#i';
+		$mapre = '#\[mapid(:[a-fA-F0-9]+)?(\]([a-z]+)\[/mapid\])#i';
+		$text = preg_replace_callback($mapre, create_function('$m','return "[mapid:".make_bbcode_uid().$m[2];'), $text);
+		$patterns[] = $mapre;
 		$replacements[] = $bbcode_tpl['mapid'];
 	}
 	
@@ -188,7 +179,7 @@ includes/page_header.php
 #
 		"L_MAPBB_LANG_JS" => $lang['MapBB_Lang_JS'],
 		"L_MAPBB_JS_ADDONS" => str_replace('%base%', 'includes/mapbbcode', $lang['MapBB_JS_Addons']),
-		"S_ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'],
+ 		"ENABLE_EXTERNAL" => $board_config['mapbb_enable_external'] ? 'true' : 'false',
 #
 #-----[ OPEN ]------------------------------------------
 #
